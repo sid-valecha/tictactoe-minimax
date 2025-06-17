@@ -20,7 +20,7 @@ This project implements a Tic-Tac-Toe game where a human player competes against
 5. The winner or tie is displayed, and the game ends.
 
 ## Installation
-1. Ensure you have Python installed (version 3.x recommended).
+1. Ensure you have Python3 installed.
 2. Clone or download this repository.
 3. Run the script using:
    ```sh
