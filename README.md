@@ -1,63 +1,78 @@
 # Tic-Tac-Toe with Minimax AI
 
-A web-based Tic-Tac-Toe game with an unbeatable AI using the Minimax algorithm. Built with FastAPI backend and vanilla HTML/CSS/JavaScript frontend.
+A web-based Tic-Tac-Toe game featuring an unbeatable AI opponent powered by the Minimax algorithm. Built with a FastAPI backend and a modern vanilla JavaScript frontend.
+
+## Overview
+
+This project demonstrates the implementation of the Minimax algorithm for optimal game play in a classic Tic-Tac-Toe game. The AI evaluates all possible game states to make the best move, ensuring it never loses. The application features a clean RESTful API architecture and an intuitive user interface.
 
 ## Features
 
-- ✅ **Unbeatable AI** - Uses Minimax algorithm for optimal play
-- ✅ **Random Player Assignment** - Randomly assigns X or O to the user
-- ✅ **Beautiful UI** - Modern gradient design with red X and black O
-- ✅ **Fast Performance** - FastAPI backend (no Pyodide overhead)
-- ✅ **RESTful API** - Clean API design for game state management
+- **Unbeatable AI** - Implements the Minimax algorithm for optimal decision-making
+- **Random Player Assignment** - Players are randomly assigned X or O at the start of each game
+- **Modern UI** - Clean, responsive design with gradient backgrounds and smooth animations
+- **RESTful API** - Well-structured FastAPI backend with clear endpoint separation
+- **Real-time Game State** - Seamless communication between frontend and backend
+- **Fast Performance** - Lightweight implementation without external dependencies
+
+## Technologies
+
+- **Backend**: Python 3.11+, FastAPI, Pydantic
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Algorithm**: Minimax with alpha-beta pruning principles
 
 ## Project Structure
 
 ```
 tictactoe-minimax/
-├── game.py          # Core game logic with Minimax algorithm
-├── api.py           # FastAPI backend
-├── index.html       # Frontend (HTML/CSS/JS)
+├── game.py          # Core game logic and Minimax algorithm implementation
+├── api.py           # FastAPI backend with REST endpoints
+├── index.html       # Frontend application (HTML/CSS/JavaScript)
 ├── requirements.txt # Python dependencies
-└── README.md        # This file
+└── README.md        # Project documentation
 ```
 
-## Local Development
+## Getting Started
 
-### Backend (API)
+### Prerequisites
 
-1. Install dependencies:
+- Python 3.11 or higher
+- pip (Python package manager)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd tictactoe-minimax
+```
+
+2. Install Python dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Run the API server:
+3. Start the backend server:
 ```bash
 python api.py
-# or
-uvicorn api:app --reload
 ```
 
 The API will be available at `http://localhost:8000`
 
-### Frontend
+4. Open the frontend:
+   - Option 1: Open `index.html` directly in your browser
+   - Option 2: Serve it with a simple HTTP server:
+     ```bash
+     # Python 3
+     python -m http.server 8080
+     
+     # Then navigate to http://localhost:8080
+     ```
 
-1. Open `index.html` in your browser, or serve it with a simple HTTP server:
-```bash
-# Python 3
-python -m http.server 8080
-
-# Node.js (if you have http-server installed)
-npx http-server -p 8080
-```
-
-2. Update the `API_BASE_URL` in `index.html` if needed (defaults to `http://localhost:8000` for local development)
-
-3. Open `http://localhost:8080` in your browser
-
-## API Endpoints
+## API Documentation
 
 ### `POST /game/new`
-Create a new game with random player assignment.
+Creates a new game instance with random player assignment.
 
 **Response:**
 ```json
@@ -72,7 +87,7 @@ Create a new game with random player assignment.
 ```
 
 ### `POST /game/{game_id}/move`
-Make a move in the game.
+Makes a move in the current game.
 
 **Request:**
 ```json
@@ -95,77 +110,36 @@ Make a move in the game.
 ```
 
 ### `GET /game/{game_id}`
-Get current game state.
+Retrieves the current state of a game.
 
-## Deployment
+## Technical Implementation
 
-### Backend Deployment (FastAPI)
+### Minimax Algorithm
 
-#### Option 1: Heroku
+The Minimax algorithm is implemented in the `TicTacToe` class (`game.py`). It recursively evaluates all possible game states to determine the optimal move:
 
-1. Create a `Procfile`:
-```
-web: uvicorn api:app --host 0.0.0.0 --port $PORT
-```
+- **Maximizing player** (AI): Chooses moves that maximize the score (+1 for win)
+- **Minimizing player** (Human): Chooses moves that minimize the score (-1 for loss)
+- **Terminal states**: Returns +1 (AI wins), -1 (Human wins), or 0 (tie)
 
-2. Create `runtime.txt`:
-```
-python-3.11.0
-```
+The algorithm explores the entire game tree, ensuring the AI never loses and will win if given the opportunity.
 
-3. Deploy:
-```bash
-heroku create your-app-name
-git push heroku main
-```
+### Key Components
 
-#### Option 2: Railway
+- **`minimax(is_maximizing)`**: Recursive function that evaluates game states
+- **`best_move()`**: Finds the optimal move for the AI by evaluating all possibilities
+- **`is_winner(player)`**: Checks for winning conditions (rows, columns, diagonals)
+- **`get_available_moves()`**: Returns all valid moves for the current board state
 
-1. Connect your GitHub repo to Railway
-2. Railway will auto-detect FastAPI and deploy
-3. Update `API_BASE_URL` in `index.html` with Railway URL
+## How It Works
 
-#### Option 3: Render
-
-1. Create a new Web Service
-2. Set build command: `pip install -r requirements.txt`
-3. Set start command: `uvicorn api:app --host 0.0.0.0 --port $PORT`
-4. Deploy
-
-### Frontend Deployment (Netlify)
-
-1. Go to [Netlify Drop](https://app.netlify.com/drop)
-2. Drag and drop `index.html`
-3. Update `API_BASE_URL` in `index.html` to your deployed API URL
-4. Redeploy
-
-Or use Git:
-1. Push to GitHub
-2. Connect to Netlify
-3. Set build command: (empty)
-4. Set publish directory: (empty)
-5. Add environment variable or update `API_BASE_URL` in code
-
-## Environment Variables
-
-For production, you may want to set:
-- `API_URL` - Your deployed API URL (update in `index.html`)
-
-## CORS
-
-The API currently allows all origins (`allow_origins=["*"]`). For production, update this in `api.py`:
-
-```python
-allow_origins=["https://your-frontend-domain.com"]
-```
-
-## Game Logic
-
-The Minimax algorithm is implemented in `game.py`:
-- `minimax()` - Recursive algorithm to evaluate all possible moves
-- `best_move()` - Finds the optimal move for the AI
-- Returns +1 for AI win, -1 for human win, 0 for tie
+1. User clicks a cell to make their move
+2. Frontend sends a POST request to `/game/{game_id}/move` with the move coordinates
+3. Backend validates the move and updates the game state
+4. If the game continues, the AI calculates the best move using Minimax
+5. The updated game state is returned to the frontend
+6. The UI updates to reflect the new board state
 
 ## License
 
-MIT
+MIT License
