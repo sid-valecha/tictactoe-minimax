@@ -8,9 +8,20 @@ import random
 app = FastAPI(title="Tic-Tac-Toe API")
 
 # Enable CORS for frontend
+# Allow localhost for development and portfolio domain for production
+import os
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",") if os.getenv("ALLOWED_ORIGINS") else [
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:8080",
+    "http://127.0.0.1:3000",
+    "https://sidvalecha.com",
+    "https://www.sidvalecha.com"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend domain
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

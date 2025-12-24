@@ -141,10 +141,10 @@
     </div>
 
     <script>
-        // API base URL - change this to your deployed API URL
+        // API base URL - automatically detects localhost vs production
         const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
             ? 'http://localhost:8000'
-            : 'https://your-api-url.herokuapp.com'; // Update with your deployed API URL
+            : 'https://web-production-d29a1.up.railway.app';
 
         let currentGameId = null;
         let userPlayer = null;
