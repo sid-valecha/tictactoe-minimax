@@ -1,6 +1,6 @@
 # Tic-Tac-Toe with Minimax AI
 
-A web-based Tic-Tac-Toe game featuring an unbeatable AI opponent powered by the Minimax algorithm. Built with a FastAPI backend and a modern vanilla JavaScript frontend. Inspired by a teeko payer project I did for my AI class in college.
+A web-based Tic-Tac-Toe game featuring an unbeatable AI opponent powered by the Minimax algorithm. Built with a FastAPI backend and a modern vanilla JavaScript frontend. Inspired by a teeko player project I did for my AI class in college.
 
 ## Overview
 
