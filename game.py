@@ -1,10 +1,12 @@
 import math
+import random
+
 
 class TicTacToe:
-    def __init__(self, ai_player='O'):
+    def __init__(self, ai_player=None):
         self.board = [[' ' for _ in range(3)] for _ in range(3)]
-        self.ai_player = ai_player  # 'X' or 'O'
-        self.human_player = 'O' if ai_player == 'X' else 'X'
+        self.ai_player = ai_player if ai_player in ('X', 'O') else random.choice(['X', 'O'])
+        self.human_player = 'O' if self.ai_player == 'X' else 'X'
 
     def is_winner(self, player):
         # Check rows, columns, and diagonals
