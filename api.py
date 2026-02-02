@@ -4,19 +4,20 @@ from pydantic import BaseModel
 from typing import Optional, List
 from game import TicTacToe
 import random
+import os
 
 app = FastAPI(title="Tic-Tac-Toe API")
 
 # Enable CORS for frontend
 # Allow localhost for development and portfolio domain for production
-import os
 allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",") if os.getenv("ALLOWED_ORIGINS") else [
     "http://localhost:8080",
     "http://localhost:3000",
     "http://127.0.0.1:8080",
     "http://127.0.0.1:3000",
     "https://sidvalecha.com",
-    "https://www.sidvalecha.com"
+    "https://www.sidvalecha.com",
+    "https://web-production-d29a1.up.railway.app"
 ]
 
 app.add_middleware(
@@ -178,5 +179,9 @@ def get_game(game_id: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        "api:app",
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8000)),
+    )
 
